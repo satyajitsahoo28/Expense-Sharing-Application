@@ -1,3 +1,11 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: ExpenseSharingApplication
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/expense_sharing_db
+      auto-index-creation: true
+
