@@ -1,4 +1,4 @@
-package com.credResolv.ExpenseSharingApplication.entity;
+package com.credresolv.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SplitDetail {
+public class ExpenseSplit {
 
     @DBRef
     private User user;

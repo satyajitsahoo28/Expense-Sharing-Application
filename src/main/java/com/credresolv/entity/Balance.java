@@ -1,37 +1,36 @@
-package com.credResolv.ExpenseSharingApplication.entity;
+package com.credresolv.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Document(collection = "groups")
+@Document(collection = "balances")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Group {
+public class Balance {
 
     @Id
-    private String groupId;
-
-    private String groupName;
-
-    private String description;
+    private String balanceId;
 
     @DBRef
-    private User createdBy;
+    private Group group;
 
     @DBRef
-    private List<User> groupMembers = new ArrayList<>();
+    private User from;
 
-    private LocalDateTime createdAt;
+    @DBRef
+    private User owesTo;
 
+    private double amount;
+
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }

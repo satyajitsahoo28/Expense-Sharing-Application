@@ -1,4 +1,4 @@
-package com.credResolv.ExpenseSharingApplication.entity;
+package com.credresolv.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +25,7 @@ public class User {
     @Indexed(unique = true)
     private String email;
 
-    @Indexed(unique = true)
-    private String phoneNumber;
-
     private String password;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

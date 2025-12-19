@@ -1,4 +1,4 @@
-package com.credResolv.ExpenseSharingApplication.entity;
+package com.credresolv.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,14 +24,12 @@ public class Settlement {
     private Group group;
 
     @DBRef
-    private User paidBy;
+    private User paidFrom;
 
     @DBRef
     private User paidTo;
 
     private double amount;
 
-    private LocalDateTime settledAt;
-
-    private String notes;
+    private LocalDateTime settledAt = LocalDateTime.now();
 }

@@ -1,4 +1,4 @@
-package com.credResolv.ExpenseSharingApplication.enums;
+package com.credresolv.enums;
 
 public enum SplitType {
 
