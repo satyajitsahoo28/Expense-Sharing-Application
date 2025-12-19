@@ -25,5 +25,6 @@ public class User {
     @Indexed(unique = true)
     private String email;
 
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 }

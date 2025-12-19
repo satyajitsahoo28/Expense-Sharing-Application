@@ -3,8 +3,8 @@ package com.expensesharingapplication.service.impl;
 import com.expensesharingapplication.dtos.request.UserRequest;
 import com.expensesharingapplication.dtos.response.UserResponse;
 import com.expensesharingapplication.entity.User;
-import com.expensesharingapplication.exception.EmailAlreadyExists;
-import com.expensesharingapplication.exception.UserNotFound;
+import com.expensesharingapplication.exception.EmailAlreadyExistsException;
+import com.expensesharingapplication.exception.UserNotFoundException;
 import com.expensesharingapplication.repository.UserRepository;
 import com.expensesharingapplication.service.UserService;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
         boolean userExists = userRepository.existsByEmail(userRequest.getEmail());
         if(userExists) {
-            throw new EmailAlreadyExists("Email already registered: " + userRequest.getEmail());
+            throw new EmailAlreadyExistsException("Email already registered: " + userRequest.getEmail());
         }
         User user = User.builder()
                 .name(userRequest.getName())
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound("User not found with id: " + userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
         return UserResponse.builder()
                 .id(user.getUserId())
                 .name(user.getName())

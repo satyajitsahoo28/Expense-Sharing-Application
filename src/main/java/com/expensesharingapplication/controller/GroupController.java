@@ -34,4 +34,9 @@ public class GroupController {
         return ResponseEntity.ok(groupResponse);
     }
 
+    @DeleteMapping("/delete_member/{groupId}/{userId}")
+    public ResponseEntity<String> deleteMemberFromGroup(@PathVariable String groupId, @PathVariable String userId) {
+        String response = groupService.removeMemberFromGroup(groupId, userId);
+        return ResponseEntity.ok(response);
+    }
 }

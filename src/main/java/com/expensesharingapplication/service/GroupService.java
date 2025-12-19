@@ -11,4 +11,6 @@ public interface GroupService {
 
     GroupResponse getGroupDetails(String groupId);
 
+    String removeMemberFromGroup(String groupId, String userId);
+
 }

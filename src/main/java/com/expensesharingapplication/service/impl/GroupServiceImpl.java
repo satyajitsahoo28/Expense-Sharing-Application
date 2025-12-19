@@ -4,8 +4,8 @@ import com.expensesharingapplication.dtos.request.GroupRequest;
 import com.expensesharingapplication.dtos.response.GroupResponse;
 import com.expensesharingapplication.entity.Group;
 import com.expensesharingapplication.entity.User;
-import com.expensesharingapplication.exception.GroupNotFound;
-import com.expensesharingapplication.exception.UserNotFound;
+import com.expensesharingapplication.exception.GroupNotFoundException;
+import com.expensesharingapplication.exception.UserNotFoundException;
 import com.expensesharingapplication.repository.GroupRepository;
 import com.expensesharingapplication.repository.UserRepository;
 import com.expensesharingapplication.service.GroupService;
@@ -25,7 +25,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponse createGroup(GroupRequest groupRequest) {
 
-        User user = userRepository.findById(groupRequest.getCreatedBy()).orElseThrow(() -> new UserNotFound("User not found"));
+        User user = userRepository.findById(groupRequest.getCreatedBy()).orElseThrow(() -> new UserNotFoundException("User not found"));
         Group group = Group.builder()
                 .groupName(groupRequest.getGroupName())
                 .description(groupRequest.getDescription())
@@ -45,8 +45,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public String addMemberToGroup(String groupId, String userId) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFound("Group not found"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound("User not found"));
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFoundException("Group not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         group.getGroupMembers().add(user);
         groupRepository.save(group);
@@ -56,7 +56,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponse getGroupDetails(String groupId) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFound("Group not found"));
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFoundException("Group not found"));
         return GroupResponse.builder()
                 .groupId(group.getGroupId())
                 .groupName(group.getGroupName())
@@ -64,5 +64,18 @@ public class GroupServiceImpl implements GroupService {
                 .members(group.getGroupMembers())
                 .createdAt(group.getCreatedAt())
                 .build();
+    }
+
+    @Override
+    public String removeMemberFromGroup(String groupId, String userId) {
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new GroupNotFoundException("Group not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        if(!group.getGroupMembers().equals(user)){
+            throw new UserNotFoundException("User is not a member of the group");
+        }
+        group.getGroupMembers().remove(user);
+        groupRepository.save(group);
+
+        return user.getName() + " removed from group " + group.getGroupName() + " successfully.";
     }
 }

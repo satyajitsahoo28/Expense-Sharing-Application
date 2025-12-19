@@ -38,5 +38,6 @@ public class Expense {
 
     private List<ExpenseSplit> splits = new ArrayList<>();
 
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 }
