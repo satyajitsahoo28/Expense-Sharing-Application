@@ -1,4 +1,4 @@
-package com.credresolv.config;
+package com.expensesharingapplication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

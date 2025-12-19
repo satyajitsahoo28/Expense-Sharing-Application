@@ -1,4 +1,4 @@
-package com.credresolv.entity;
+package com.expensesharingapplication.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class ExpenseSplit {
     @DBRef
     private User user;
 
-    private double amount;
+    private Double amount;
 
-    private double percentage;
+    private Double percentage;
 }

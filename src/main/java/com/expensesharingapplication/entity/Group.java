@@ -1,7 +1,5 @@
-package com.credresolv.entity;
+package com.expensesharingapplication.entity;
 
-
-import com.credresolv.enums.SplitType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,29 +12,28 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "expenses")
+@Document(collection = "groups")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Expense {
+public class Group {
 
     @Id
-    private String expenseId;
+    private String groupId;
+
+    private String groupName;
 
     private String description;
 
-    private double totalAmount;
+    @DBRef
+    private User createdBy;
 
     @DBRef
-    private Group group;
+    @Builder.Default
+    private List<User> groupMembers = new ArrayList<>();
 
-    @DBRef
-    private User paidBy;
-
-    private SplitType splitType;
-
-    private List<ExpenseSplit> splits = new ArrayList<>();
-
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
 }

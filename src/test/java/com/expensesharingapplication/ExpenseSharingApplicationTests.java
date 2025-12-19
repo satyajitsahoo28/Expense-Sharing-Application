@@ -1,4 +1,4 @@
-package com.credresolv;
+package com.expensesharingapplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
