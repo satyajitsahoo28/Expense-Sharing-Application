@@ -16,8 +16,10 @@ import com.expensesharingapplication.factoryPattern.SplitFactory;
 import com.expensesharingapplication.repository.ExpenseRepository;
 import com.expensesharingapplication.repository.GroupRepository;
 import com.expensesharingapplication.repository.UserRepository;
+import com.expensesharingapplication.service.BalanceService;
 import com.expensesharingapplication.service.ExpenseService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +30,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
+    private final BalanceService balanceService;
 
-    public ExpenseServiceImpl(ExpenseRepository expenseRepository, GroupRepository groupRepository, UserRepository userRepository) {
+    public ExpenseServiceImpl(ExpenseRepository expenseRepository, GroupRepository groupRepository, UserRepository userRepository, BalanceService balanceService) {
         this.expenseRepository = expenseRepository;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
+        this.balanceService = balanceService;
     }
 
     @Override
@@ -68,7 +72,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setSplits(calculateSplits);
 
         Expense savedExpense = expenseRepository.save(expense);
-
+        balanceService.createBalancesForExpense(user, group, calculateSplits);
         return ExpenseResponse.builder()
                 .expenseId(savedExpense.getExpenseId())
                 .description(savedExpense.getDescription())
