@@ -25,4 +25,14 @@ public class GlobalExceptionHandler {
     public String handleUserNotFoundException(UserNotFoundException ex) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(SettlementNotFoundException.class)
+    public String handleSettlementNotFoundException(SettlementNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(SimplifiedBalanceNotFoundException.class)
+    public String handleSimplifiedBalanceNotFoundException(SimplifiedBalanceNotFoundException ex) {
+        return ex.getMessage();
+    }
 }

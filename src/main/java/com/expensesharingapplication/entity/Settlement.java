@@ -31,5 +31,8 @@ public class Settlement {
 
     private Double amount;
 
+    @Builder.Default
     private LocalDateTime settledAt = LocalDateTime.now();
+
+    private String notes;
 }
